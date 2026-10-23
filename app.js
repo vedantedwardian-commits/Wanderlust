@@ -14,6 +14,8 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
+const wrapAsync = require("./utils/wrapAsync.js");
+const { home } = require("./controllers/listings.js");
 
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/reviews.js");
@@ -103,9 +105,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", (req, res) => {
-  res.render("home.ejs");
-});
+app.get("/", wrapAsync(home));
 
 app.get("/privacy", (req, res) => {
   res.render("privacy.ejs");
@@ -126,7 +126,7 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   console.error(err);
   let { statusCode = 500, message = "Something went Wrong" } = err;
-  res.status(statusCode).send(message);
+  res.status(statusCode).render("error.ejs", { statusCode, message });
 });
 
 app.listen(PORT, () => {

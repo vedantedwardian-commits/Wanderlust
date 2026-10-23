@@ -1,44 +1,20 @@
-<% if(success && success.length){ %>
-    <div class="flashMessages">
-    <div class="flashMessage flashMessage--success flashAutoDismiss" role="alert" aria-live="polite">
-        <span><%= success %></span>
+<%
+  const flashes = [
+    { msg: typeof success !== "undefined" && success, kind: "success", icon: "fa-circle-check" },
+    { msg: typeof update !== "undefined" && update, kind: "update", icon: "fa-pen" },
+    { msg: typeof deleteMsg !== "undefined" && deleteMsg, kind: "delete", icon: "fa-trash" },
+    { msg: typeof review !== "undefined" && review, kind: "review", icon: "fa-star" },
+    { msg: typeof error !== "undefined" && error, kind: "error", icon: "fa-circle-exclamation" },
+  ].filter((f) => f.msg && f.msg.length);
+%>
+<% if (flashes.length) { %>
+  <div class="flashMessages">
+    <% flashes.forEach((f) => { %>
+      <div class="flashMessage flashMessage--<%= f.kind %> flashAutoDismiss" role="alert" aria-live="polite">
+        <i class="fa-solid <%= f.icon %> flashIcon"></i>
+        <span><%= f.msg %></span>
         <button type="button" class="flashClose" aria-label="Dismiss alert" onclick="this.closest('.flashMessage').remove()">&times;</button>
-    </div>
-    </div>
-<% } %>
-
-<% if(update && update.length){ %>
-    <div class="flashMessages">
-    <div class="flashMessage flashMessage--update flashAutoDismiss" role="alert" aria-live="polite">
-        <span><%= update %></span>
-        <button type="button" class="flashClose" aria-label="Dismiss alert" onclick="this.closest('.flashMessage').remove()">&times;</button>
-    </div>
-    </div>
-<% } %>
-
-<% if(deleteMsg && deleteMsg.length){ %>
-    <div class="flashMessages">
-    <div class="flashMessage flashMessage--delete flashAutoDismiss" role="alert" aria-live="polite">
-        <span><%= deleteMsg %></span>
-        <button type="button" class="flashClose" aria-label="Dismiss alert" onclick="this.closest('.flashMessage').remove()">&times;</button>
-    </div>
-    </div>
-<% } %>
-
-<% if(review && review.length){ %>
-    <div class="flashMessages">
-    <div class="flashMessage flashMessage--review flashAutoDismiss" role="alert" aria-live="polite">
-        <span><%= review %></span>
-        <button type="button" class="flashClose" aria-label="Dismiss alert" onclick="this.closest('.flashMessage').remove()">&times;</button>
-    </div>
-    </div>
-<% } %>
-
-<% if(error && error.length){ %>
-    <div class="flashMessages">
-    <div class="flashMessage flashMessage--error flashAutoDismiss" role="alert" aria-live="polite">
-        <span><%= error %></span>
-        <button type="button" class="flashClose" aria-label="Dismiss alert" onclick="this.closest('.flashMessage').remove()">&times;</button>
-    </div>
-    </div>
+      </div>
+    <% }) %>
+  </div>
 <% } %>

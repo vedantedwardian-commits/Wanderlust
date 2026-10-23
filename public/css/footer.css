@@ -1,48 +1,106 @@
 .footer {
-  background-color: #ebebeb;
-  padding: 20px;
-  text-align: center;
-  position: relative;
-  bottom: 0;
+  background: var(--soft);
+  border-top: 1px solid var(--line);
   width: 100%;
 }
 
-.f-info-socials {
+.footer-inner {
+  max-width: 1760px;
+  margin: 0 auto;
+  padding: 3rem var(--page-pad) 0;
+}
+
+.footer-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding-bottom: 3rem;
+}
+
+.footer-cols section {
   display: flex;
-  gap: 1.2rem;
-  justify-content: center;
-  align-items: center;
-  color: #000;
+  flex-direction: column;
+  gap: 0.85rem;
 }
 
-.f-info-socials a {
-  color: #000;
+.footer-cols h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+}
+
+.footer-cols a {
+  color: var(--ink);
   text-decoration: none;
-  font-size: 1.5rem;
+  font-size: 0.9rem;
 }
 
-.f-info-socials a:hover {
-  color: #fe424d;
+.footer-cols a:hover {
+  text-decoration: underline;
 }
 
-.f-info-company {
-  color: #000;
-  margin-top: 1rem;
-}
-
-.f-info-links {
+.footer-bottom {
+  border-top: 1px solid var(--line);
+  padding: 1.5rem 0;
   display: flex;
-  gap: 1.2rem;
-  justify-content: center;
   align-items: center;
-  margin-top: 1rem;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.88rem;
 }
 
-.f-info-links a {
-  color: #000;
+.footer-legal,
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.footer-legal a,
+.footer-socials a {
+  color: var(--ink);
   text-decoration: none;
 }
 
-.f-info-links a:hover {
-  color: #fe424d;
+.footer-legal a:hover {
+  text-decoration: underline;
+}
+
+.footer-lang {
+  font-weight: 600;
+  margin-right: 0.75rem;
+}
+
+.footer-socials a {
+  font-size: 1.15rem;
+  margin-left: 0.5rem;
+}
+
+.footer-socials a:hover {
+  color: var(--brand);
+}
+
+@media (max-width: 744px) {
+  .footer-cols {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-bottom: 1rem;
+  }
+
+  .footer-cols section {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .footer-cols section:last-child {
+    border-bottom: none;
+  }
+
+  .footer-bottom {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
 }

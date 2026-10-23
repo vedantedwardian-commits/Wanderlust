@@ -1,30 +1,32 @@
 <% layout("/layouts/boilerplate.ejs") %>
-<body>
-    <section class="listings-hero">
-        <p class="hero-kicker">Find your next stay</p>
-        <h1 class="hero-title">Explore unique homes and experiences</h1>
-        <p class="hero-subtitle">
-            <%= listings.length %> listing<%= listings.length !== 1 ? "s" : "" %> available across different destinations.
-        </p>
-    </section>
 
-    <section class="cards">
-        <% for(let list of listings){ %>
-            <a href="/listings/<%= list._id %>" class="card-link">
-                <article class="card">
-                    <img src="<%= list.image.url %>" alt="Image of <%= list.title %>">
-                    <div class="card-content">
-                        <p class="card-location"><i class="fa-solid fa-location-dot"></i> <%= list.location %>, <%= list.country %></p>
-                        <h2 class="list-title"><%= list.title %></h2>
-                        <p class="list-description"><%= (list.description || "").slice(0, 90) %><%= (list.description || "").length > 90 ? "..." : "" %></p>
-                        <div class="card-footer">
-                            <p class="list-price">₹ <%= list.price.toLocaleString("en-IN") %> <span>/ night</span></p>
-                            <span class="view-details">View details</span>
-                        </div>
-                    </div>
-                </article>
-            </a>
-        <% } %>
-    </section>
+<main class="results">
+  <header class="results-header">
+    <div>
+      <p class="results-count">
+        <%= listings.length %> stay<%= listings.length !== 1 ? "s" : "" %>
+      </p>
+      <h1 class="results-title">
+        <%= q ? `Stays matching "${q}"` : "Explore all stays" %>
+      </h1>
+    </div>
+    <% if (q) { %>
+      <a href="/listings" class="results-clear">Clear search</a>
+    <% } %>
+  </header>
 
-</body>
+  <% if (!listings.length) { %>
+    <div class="results-empty">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <h2>No exact matches</h2>
+      <p>Try changing or removing your search to see more stays.</p>
+      <a href="/listings" class="btn-outline">Show all stays</a>
+    </div>
+  <% } else { %>
+    <section class="results-grid">
+      <% for (const list of listings) { %>
+        <%- include("../includes/stayCard.ejs", { list }) %>
+      <% } %>
+    </section>
+  <% } %>
+</main>

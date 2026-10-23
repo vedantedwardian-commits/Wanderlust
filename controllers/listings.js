@@ -1,8 +1,68 @@
 const Listing = require("../models/listing");
 
+const escapeRegex = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+// Attach avgRating / reviewCount to listings whose reviews are populated
+const withRatings = (listings) => {
+  for (const listing of listings) {
+    const ratings = (listing.reviews || []).map((r) => r.rating).filter(Boolean);
+    listing.reviewCount = ratings.length;
+    listing.avgRating = ratings.length
+      ? ratings.reduce((sum, r) => sum + r, 0) / ratings.length
+      : null;
+  }
+  return listings;
+};
+
+module.exports.home = async (req, res) => {
+  const listings = withRatings(
+    await Listing.find({}).populate("reviews", "rating").lean(),
+  );
+
+  // Group listings by country for the "Popular homes in ..." rows
+  const byCountry = new Map();
+  for (const listing of listings) {
+    const country = listing.country || "Other";
+    if (!byCountry.has(country)) byCountry.set(country, []);
+    byCountry.get(country).push(listing);
+  }
+  const sections = [...byCountry.entries()]
+    .map(([country, items]) => ({ country, items }))
+    .sort((a, b) => b.items.length - a.items.length);
+
+  // Destinations for the "Inspiration" tabs: unique locations per country
+  const destinations = sections.slice(0, 6).map(({ country, items }) => {
+    const counts = new Map();
+    for (const item of items) {
+      if (item.location) counts.set(item.location, (counts.get(item.location) || 0) + 1);
+    }
+    return {
+      country,
+      places: [...counts.entries()].map(([location, count]) => ({ location, count })),
+    };
+  });
+
+  res.render("home.ejs", { listings, sections, destinations, hideNavSearch: true });
+};
+
 module.exports.index = async (req, res) => {
-  const listings = await Listing.find({});
-  res.render("listings/index.ejs", { listings });
+  const q = (req.query.q || "").trim();
+  let filter = {};
+  if (q) {
+    const pattern = new RegExp(escapeRegex(q), "i");
+    filter = {
+      $or: [
+        { title: pattern },
+        { location: pattern },
+        { country: pattern },
+        { description: pattern },
+      ],
+    };
+  }
+  const listings = withRatings(
+    await Listing.find(filter).populate("reviews", "rating").lean(),
+  );
+  res.render("listings/index.ejs", { listings, q });
 };
 
 module.exports.renderNewForm = (req, res) => {
@@ -24,11 +84,18 @@ module.exports.showListing = async (req, res) => {
     req.flash("error", "Listing does not exist!");
     return res.redirect("/listings");
   }
+  const { avgRating, reviewCount } = withRatings([{ reviews: listing.reviews }])[0];
   const ownerUsername = listing.owner?.username || "Unknown";
   const mapQuery = encodeURIComponent(
     `${listing.location}, ${listing.country}`,
   );
-  res.render("listings/show.ejs", { listing, ownerUsername, mapQuery });
+  res.render("listings/show.ejs", {
+    listing,
+    ownerUsername,
+    mapQuery,
+    avgRating,
+    reviewCount,
+  });
 };
 
 module.exports.createListing = async (req, res, next) => {

@@ -1,0 +1,20 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<main class="error-page">
+  <div class="error-copy">
+    <h1>Oops!</h1>
+    <h2>
+      <%= statusCode === 404 ? "We can't seem to find the page you're looking for." : message %>
+    </h2>
+    <p class="error-code">Error code: <%= statusCode %></p>
+    <p>Here are some helpful links instead:</p>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/listings">All stays</a></li>
+      <li><a href="/listings/new">Add a location</a></li>
+    </ul>
+  </div>
+  <div class="error-art" aria-hidden="true">
+    <i class="fa-regular fa-compass"></i>
+  </div>
+</main>

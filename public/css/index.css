@@ -1,126 +1,177 @@
-.listings-hero {
-  max-width: 1100px;
-  margin: 2.2rem auto 1.4rem;
-  padding: 0 1rem;
+/* ── Search results page ─────────────────────────── */
+.results {
+  max-width: 1760px;
+  margin: 0 auto;
+  padding: 2rem var(--page-pad) 3rem;
 }
 
-.hero-kicker {
-  margin: 0;
-  color: #ef4444;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-}
-
-.hero-title {
-  margin: 0.4rem 0 0.5rem;
-  font-size: clamp(1.6rem, 3.2vw, 2.3rem);
-  font-weight: 700;
-  color: #111827;
-}
-
-.hero-subtitle {
-  margin: 0;
-  color: #6b7280;
-  font-size: 0.96rem;
-}
-
-.cards {
-  max-width: 1100px;
-  margin: 0 auto 2.5rem;
-  padding: 0 1rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.2rem;
-}
-
-.card-link {
-  text-decoration: none;
-}
-
-.card {
-  height: 100%;
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 1rem;
-  overflow: hidden;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-}
-
-.card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-
-.card-content {
-  padding: 0.9rem 1rem 1rem;
-}
-
-.card-location {
-  margin: 0;
-  color: #6b7280;
-  font-size: 0.82rem;
+.results-header {
   display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.list-title {
-  margin: 0.45rem 0 0.35rem;
-  color: #111827;
-  font-size: 1.05rem;
-  line-height: 1.3;
-}
-
-.list-description {
-  margin: 0;
-  color: #4b5563;
-  font-size: 0.9rem;
-  line-height: 1.45;
-  min-height: 2.6rem;
-}
-
-.card-footer {
-  margin-top: 0.7rem;
-  display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.75rem;
 }
 
-.list-price {
-  margin: 0;
-  color: #111827;
-  font-size: 1rem;
+.results-count {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+}
+
+.results-title {
+  font-size: 1.6rem;
   font-weight: 700;
 }
 
-.list-price span {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #6b7280;
+.results-clear {
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 
-.view-details {
-  color: #ef4444;
-  font-size: 0.84rem;
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2.5rem 1.5rem;
+}
+
+.results-empty {
+  text-align: center;
+  padding: 5rem 1rem;
+}
+
+.results-empty i {
+  font-size: 2.4rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.results-empty h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.results-empty p {
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+/* ── Stay card ───────────────────────────────────── */
+.stay {
+  position: relative;
+  scroll-snap-align: start;
+}
+
+.stay-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.stay-media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 0.9rem;
+  overflow: hidden;
+  background: var(--soft);
+}
+
+.stay-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.stay:hover .stay-media img {
+  transform: scale(1.04);
+}
+
+.stay-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  background: #fff;
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+}
+
+.stay-heart {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.35rem;
+  color: rgba(0, 0, 0, 0.5);
+  -webkit-text-stroke: 2px #fff;
+  transition:
+    transform 0.15s ease,
+    color 0.15s ease;
+}
+
+.stay-heart:hover {
+  transform: scale(1.1);
+}
+
+.stay-heart.is-saved {
+  color: var(--brand);
+}
+
+.stay-info {
+  padding-top: 0.65rem;
+}
+
+.stay-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.stay-title {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stay-rating {
+  font-size: 0.85rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.stay-rating i {
+  font-size: 0.7rem;
+}
+
+.stay-meta {
+  margin: 0.15rem 0 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stay-price {
+  margin: 0.3rem 0 0;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+
+.stay-price strong {
   font-weight: 600;
 }
 
-@media (max-width: 576px) {
-  .cards {
-    gap: 1rem;
-  }
-
-  .card img {
-    height: 170px;
-  }
-}

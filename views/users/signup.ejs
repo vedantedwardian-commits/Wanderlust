@@ -1,49 +1,39 @@
 <% layout("/layouts/boilerplate.ejs") %>
-<body class="form-body">
-  <br /><br /><br /><br />
-  <form method="POST" action="/signup">
-    <h3 class="form-head">Create Your Account</h3>
 
-    <div class="form-field">
-      <label for="username" class="form-label">Username</label>
-      <input
-        id="username"
-        name="username"
-        placeholder="Choose a username"
-        class="form-control"
-        required
-      />
+<main class="auth-page">
+  <form method="POST" action="/signup" class="auth-card">
+    <header class="auth-header">Sign up</header>
+    <div class="auth-body">
+      <h1>Welcome to WanderLust</h1>
+
+      <div class="field-group">
+        <label class="field">
+          <span>Username</span>
+          <input name="username" autocomplete="username" required />
+        </label>
+        <label class="field">
+          <span>Email</span>
+          <input name="email" type="email" autocomplete="email" required />
+        </label>
+        <label class="field">
+          <span>Password</span>
+          <input name="password" type="password" autocomplete="new-password" required />
+        </label>
+      </div>
+
+      <p class="auth-fine">
+        By selecting <strong>Agree and continue</strong>, I agree to WanderLust's
+        <a href="/terms">Terms of Service</a> and acknowledge the
+        <a href="/privacy">Privacy Policy</a>.
+      </p>
+
+      <button class="btn-brand auth-submit">Agree and continue</button>
+
+      <div class="auth-divider"><span>or</span></div>
+
+      <p class="auth-switch">
+        Already have an account? <a href="/signin">Log in</a>
+      </p>
     </div>
-
-    <div class="form-field">
-      <label for="email" class="form-label">Email</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        placeholder="Enter your email"
-        class="form-control"
-        required
-      />
-    </div>
-
-    <div class="form-field">
-      <label for="password" class="form-label">Password</label>
-      <input
-        id="password"
-        name="password"
-        type="password"
-        placeholder="Create a password"
-        class="form-control"
-        required
-      />
-    </div>
-
-    <button class="form-btn">Sign Up</button>
-    <p class="form-switch-text">
-      Already have an account?
-      <a href="/signin" class="form-switch-link">Sign In</a>
-    </p>
   </form>
-  <br /><br />
-</body>
+</main>

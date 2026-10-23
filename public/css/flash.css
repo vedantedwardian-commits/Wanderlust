@@ -1,65 +1,92 @@
+/* Airbnb-style toasts, floating at the bottom-left */
 .flashMessages {
+  position: fixed;
+  left: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 2000;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-inline: auto;
-  margin-top: 10px;
+  gap: 0.75rem;
+  max-width: min(420px, calc(100vw - 3rem));
 }
 
 .flashMessage {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  width: 90%;
-  font-weight: 400;
-  border-radius: 5px;
-  font-size: 18px;
-  padding: 8px 12px;
+  gap: 0.85rem;
+  background: #fff;
+  color: var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+  padding: 1rem 1rem 1rem 1.15rem;
+  font-size: 0.92rem;
+  font-weight: 600;
   opacity: 1;
+  animation: flashIn 0.3s ease;
   transition:
     opacity 0.4s ease,
     transform 0.4s ease;
 }
 
-.flashMessage--success {
-  background: rgb(168, 218, 161);
-  border: 2px solid rgb(139, 220, 129);
+.flashMessage span {
+  flex: 1;
 }
 
-.flashMessage--update {
-  background: rgb(173, 216, 230);
-  border: 2px solid rgb(100, 181, 246);
+.flashIcon {
+  font-size: 1.25rem;
 }
 
-.flashMessage--delete {
-  background: rgb(255, 179, 179);
-  border: 2px solid rgb(239, 105, 105);
+.flashMessage--success .flashIcon {
+  color: #008a05;
 }
 
-.flashMessage--review {
-  background: rgb(255, 236, 179);
-  border: 2px solid rgb(255, 193, 7);
+.flashMessage--update .flashIcon {
+  color: #428bff;
 }
 
-.flashMessage--error {
-  background: rgb(255, 205, 210);
-  border: 2px solid rgb(211, 47, 47);
-  color: rgb(183, 28, 28);
+.flashMessage--delete .flashIcon,
+.flashMessage--error .flashIcon {
+  color: #c13515;
+}
+
+.flashMessage--review .flashIcon {
+  color: var(--brand);
 }
 
 .flashMessage.fadeOut {
   opacity: 0;
-  transform: translateY(-6px);
+  transform: translateY(8px);
 }
 
 .flashClose {
   border: none;
   background: transparent;
-  color: inherit;
-  font-size: 22px;
+  color: var(--muted);
+  font-size: 1.4rem;
   line-height: 1;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
   cursor: pointer;
+}
+
+.flashClose:hover {
+  background: var(--soft);
+  color: var(--ink);
+}
+
+@keyframes flashIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@media (max-width: 744px) {
+  .flashMessages {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    max-width: none;
+  }
 }

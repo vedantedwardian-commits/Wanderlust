@@ -1,75 +1,19 @@
 <% layout("/layouts/boilerplate.ejs") %>
-<body>
-  <br /><br />
-  <form
-    method="POST"
-    action="/listings/<%= listing._id %>?_method=PUT"
-    enctype="multipart/form-data"
-  >
-    <h3 class="form-head">Edit Listing</h3>
-    <div class="form-field">
-      <label for="title" class="form-label">Title</label>
-      <input
-        name="listing[title]"
-        value="<%= listing.title %>"
-        class="form-control"
-        required
-      />
-    </div>
-    <br />
-    <div class="form-field">
-      <label for="description" class="form-label">Description</label>
-      <textarea name="listing[description]" class="form-control">
-<%= listing.description %></textarea
-      >
-    </div>
-    <br />
-    <div class="form-field">
-      <label class="form-label">Current Image</label>
-      <img
-        src="<%= listing.image && listing.image.url ? listing.image.url : '' %>"
-        alt="Current Listing Image"
-        class="edit-image-preview"
-      />
-    </div>
-    <br />
-    <div class="form-field">
-      <label for="image" class="form-label">Change Image</label>
-      <input name="image" class="form-control" type="file" accept="image/*" />
-    </div>
-    <br />
-    <div class="form-field">
-      <label for="price" class="form-label">Price</label>
-      <input
-        name="listing[price]"
-        value="<%= listing.price %>"
-        type="number"
-        class="form-control"
-        required
-      />
-    </div>
-    <br />
-    <div class="form-field">
-      <label for="location" class="form-label">Location</label>
-      <input
-        name="listing[location]"
-        value="<%= listing.location %>"
-        class="form-control"
-        required
-      />
-    </div>
-    <br />
-    <div class="form-field">
-      <label for="country" class="form-label">Country</label>
-      <input
-        name="listing[country]"
-        value="<%= listing.country %>"
-        class="form-control"
-        required
-      />
-    </div>
-    <br />
-    <button class="form-btn">Edit</button>
+
+<main class="host-page">
+  <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" enctype="multipart/form-data" class="host-form">
+    <header class="host-header">
+      <p class="host-kicker">Listing editor</p>
+      <h1>Edit your listing</h1>
+    </header>
+
+    <%- include("../includes/listingFields.ejs", { listing }) %>
+
+    <footer class="host-actions">
+      <a href="/listings/<%= listing._id %>" class="btn-plain">Cancel</a>
+      <button class="btn-brand">Save changes</button>
+    </footer>
   </form>
-  <br /><br />
-</body>
+</main>
+
+<script src="/js/forms.js"></script>

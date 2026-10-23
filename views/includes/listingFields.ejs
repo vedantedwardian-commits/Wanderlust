@@ -1,0 +1,55 @@
+<% const l = listing || {}; %>
+<section class="host-step">
+  <h2>The basics</h2>
+  <p class="host-step-hint">A short, catchy title and a description help your place stand out.</p>
+  <label class="field">
+    <span>Title</span>
+    <input name="listing[title]" value="<%= l.title || '' %>" placeholder="Cozy beachfront cottage" required />
+  </label>
+  <label class="field">
+    <span>Description</span>
+    <textarea name="listing[description]" rows="5" placeholder="What makes your place special?"><%= l.description || '' %></textarea>
+  </label>
+</section>
+
+<section class="host-step">
+  <h2>Where's your place located?</h2>
+  <p class="host-step-hint">Guests will see this on the listing and the map.</p>
+  <div class="field-group">
+    <label class="field">
+      <span>City / area</span>
+      <input name="listing[location]" value="<%= l.location || '' %>" placeholder="Goa" required />
+    </label>
+    <label class="field">
+      <span>Country</span>
+      <input name="listing[country]" value="<%= l.country || '' %>" placeholder="India" required />
+    </label>
+  </div>
+</section>
+
+<section class="host-step">
+  <h2>Add a photo</h2>
+  <p class="host-step-hint">A bright, wide photo works best.</p>
+  <label class="upload" data-upload>
+    <img class="upload-preview" src="<%= l.image && l.image.url ? l.image.url : '' %>" alt="" <%= l.image && l.image.url ? '' : 'hidden' %> />
+    <span class="upload-empty" <%= l.image && l.image.url ? 'hidden' : '' %>>
+      <i class="fa-regular fa-images"></i>
+      <strong>Upload a photo</strong>
+      <small>Click to choose from your device</small>
+    </span>
+    <input name="image" type="file" accept="image/*" />
+  </label>
+  <% if (l.image && l.image.url) { %>
+    <p class="host-step-hint upload-note">Choose a new file to replace the current photo.</p>
+  <% } %>
+</section>
+
+<section class="host-step">
+  <h2>Set your price</h2>
+  <p class="host-step-hint">You can change it anytime.</p>
+  <label class="price-input">
+    <span>₹</span>
+    <input name="listing[price]" type="number" min="1" value="<%= l.price || '' %>" placeholder="2500" required />
+  </label>
+  <p class="host-step-hint price-suffix">per night</p>
+</section>

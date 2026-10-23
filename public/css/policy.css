@@ -1,157 +1,108 @@
+/* ── Policy pages (Help Centre style) ────────────── */
 .policy-page {
-  background: #f9fafb;
-  min-height: 80vh;
-  padding: 3rem 1rem 5rem;
+  padding: 3rem var(--page-pad) 5rem;
 }
 
 .policy-container {
-  max-width: 820px;
+  max-width: 1120px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  column-gap: 5rem;
 }
 
-/* Hero */
 .policy-hero {
-  text-align: center;
+  grid-column: 1 / -1;
+  padding-bottom: 2rem;
   margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--line);
 }
 
 .policy-hero-icon {
-  width: 68px;
-  height: 68px;
-  border-radius: 18px;
-  background: rgba(254, 66, 77, 0.09);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-  color: #fe424d;
-  margin-bottom: 1.1rem;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
 }
 
 .policy-hero h1 {
-  margin: 0 0 0.5rem;
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
-  font-weight: 800;
-  color: #111827;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
 .policy-meta {
-  margin: 0;
-  font-size: 0.88rem;
-  color: #9ca3af;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
-/* Table of contents */
+/* Sticky table of contents */
 .policy-toc {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  padding: 1.3rem 1.5rem 1.5rem;
-  margin-bottom: 2.5rem;
+  position: sticky;
+  top: 7rem;
+  align-self: start;
 }
 
 .toc-label {
-  margin: 0 0 0.75rem;
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #6b7280;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
 }
 
 .policy-toc ol {
-  margin: 0;
-  padding-left: 1.15rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 0.35rem 1.5rem;
-}
-
-.policy-toc li {
-  font-size: 0.92rem;
+  list-style: none;
+  border-left: 1px solid var(--line);
 }
 
 .policy-toc a {
-  color: #fe424d;
+  display: block;
+  padding: 0.45rem 0 0.45rem 1rem;
+  margin-left: -1px;
+  border-left: 2px solid transparent;
+  color: var(--muted);
   text-decoration: none;
-  font-weight: 500;
+  font-size: 0.92rem;
 }
 
 .policy-toc a:hover {
-  text-decoration: underline;
+  color: var(--ink);
+  border-left-color: var(--ink);
 }
 
 /* Body */
-.policy-body {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  padding: 2.2rem 2rem;
-}
-
 .policy-lead {
-  font-size: 1.05rem;
-  color: #374151;
-  line-height: 1.8;
-  border-left: 3px solid #fe424d;
-  padding-left: 1rem;
-  margin: 0 0 2.2rem;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
 }
 
 .policy-body section {
-  margin-bottom: 2.2rem;
-  padding-bottom: 2.2rem;
-  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--line-soft);
+  scroll-margin-top: 7rem;
 }
 
 .policy-body section:last-child {
-  margin-bottom: 0;
-  padding-bottom: 0;
   border-bottom: none;
 }
 
 .policy-body h2 {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #111827;
-  margin: 0 0 0.85rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
 .policy-section-num {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  background: rgba(254, 66, 77, 0.1);
-  color: #fe424d;
-  font-size: 0.82rem;
-  font-weight: 800;
-  flex-shrink: 0;
+  color: var(--muted);
+  margin-right: 0.35rem;
 }
 
-.policy-body p {
-  margin: 0 0 0.85rem;
-  color: #4b5563;
-  line-height: 1.75;
-  font-size: 0.97rem;
+.policy-body p,
+.policy-body ul {
+  line-height: 1.7;
+  margin-bottom: 0.9rem;
 }
 
-.policy-body p:last-child {
-  margin-bottom: 0;
-}
-
-.policy-body ul,
-.policy-body ol {
-  margin: 0 0 0.85rem;
-  padding-left: 1.3rem;
-  color: #4b5563;
-  font-size: 0.97rem;
-  line-height: 1.75;
+.policy-body ul {
+  padding-left: 1.25rem;
 }
 
 .policy-body li {
@@ -159,42 +110,104 @@
 }
 
 .policy-body a {
-  color: #fe424d;
-  text-decoration: none;
-  font-weight: 500;
+  color: var(--ink);
+  font-weight: 600;
 }
 
-.policy-body a:hover {
-  text-decoration: underline;
-}
-
-/* Footer links */
 .policy-footer-links {
+  grid-column: 2;
   display: flex;
   gap: 1.5rem;
-  justify-content: center;
-  margin-top: 2rem;
   flex-wrap: wrap;
+  padding-top: 1rem;
 }
 
 .policy-footer-links a {
-  color: #6b7280;
-  text-decoration: none;
-  font-size: 0.92rem;
-  font-weight: 500;
-  transition: color 0.15s;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
 }
 
-.policy-footer-links a:hover {
-  color: #fe424d;
-}
-
-@media (max-width: 600px) {
-  .policy-body {
-    padding: 1.5rem 1.1rem;
+@media (max-width: 860px) {
+  .policy-container {
+    grid-template-columns: 1fr;
   }
 
-  .policy-toc ol {
+  .policy-toc {
+    position: static;
+    margin-bottom: 2.5rem;
+  }
+
+  .policy-footer-links {
+    grid-column: 1;
+  }
+}
+
+/* ── Error page ──────────────────────────────────── */
+.error-page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 5rem var(--page-pad);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 3rem;
+}
+
+.error-copy h1 {
+  font-size: clamp(4rem, 10vw, 9rem);
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.error-copy h2 {
+  font-size: 1.75rem;
+  font-weight: 400;
+  max-width: 480px;
+  margin-bottom: 1.25rem;
+}
+
+.error-code {
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.error-copy p {
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.error-copy ul {
+  list-style: none;
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.error-copy a {
+  color: #008489;
+  text-decoration: none;
+}
+
+.error-copy a:hover {
+  text-decoration: underline;
+}
+
+.error-art i {
+  font-size: clamp(8rem, 20vw, 16rem);
+  color: var(--brand);
+  opacity: 0.9;
+}
+
+@media (max-width: 744px) {
+  .error-page {
     grid-template-columns: 1fr;
+    padding-top: 3rem;
+  }
+
+  .error-art {
+    display: none;
   }
 }

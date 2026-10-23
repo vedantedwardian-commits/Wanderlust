@@ -1,64 +1,19 @@
 <% layout("/layouts/boilerplate.ejs") %>
-<body class="form-body">
-  <br /><br />
-  <form method="POST" action="/listings" enctype="multipart/form-data">
-    <h3 class="form-head">Create A New Listing</h3>
-    <div class="form-field">
-      <label for="title" class="form-label">Title</label>
-      <input
-        name="listing[title]"
-        placeholder="Enter Title"
-        class="form-control"
-        required
-      />
-    </div>
 
-    <div class="form-field">
-      <label for="description" class="form-label">Description</label>
-      <textarea
-        name="listing[description]"
-        placeholder="Enter Description"
-        class="form-control"
-      ></textarea>
-    </div>
+<main class="host-page">
+  <form method="POST" action="/listings" enctype="multipart/form-data" class="host-form">
+    <header class="host-header">
+      <p class="host-kicker">Become a host</p>
+      <h1>Tell us about your place</h1>
+    </header>
 
-    <div class="form-field">
-      <label for="image" class="form-label">Upload Image</label>
-      <input name="image" class="form-control" type="file" accept="image/*" />
-    </div>
+    <%- include("../includes/listingFields.ejs", { listing: null }) %>
 
-    <div class="form-field">
-      <label for="price" class="form-label">Price</label>
-      <input
-        name="listing[price]"
-        placeholder="Enter Price"
-        type="number"
-        class="form-control"
-        required
-      />
-    </div>
-
-    <div class="form-field">
-      <label for="location" class="form-label">Location</label>
-      <input
-        name="listing[location]"
-        placeholder="Enter Location"
-        class="form-control"
-        required
-      />
-    </div>
-
-    <div class="form-field">
-      <label for="country" class="form-label">Country</label>
-      <input
-        name="listing[country]"
-        placeholder="Enter Country"
-        class="form-control"
-        required
-      />
-    </div>
-
-    <button class="form-btn">Add</button>
+    <footer class="host-actions">
+      <a href="/listings" class="btn-plain">Back</a>
+      <button class="btn-brand">Publish listing</button>
+    </footer>
   </form>
-  <br /><br />
-</body>
+</main>
+
+<script src="/js/forms.js"></script>

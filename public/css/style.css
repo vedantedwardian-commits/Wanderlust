@@ -1,3 +1,17 @@
+:root {
+  --brand: #ff385c;
+  --brand-dark: #e00b41;
+  --brand-gradient: linear-gradient(90deg, #e61e4d 0%, #e31c5f 50%, #d70466 100%);
+  --ink: #222222;
+  --muted: #6a6a6a;
+  --line: #dddddd;
+  --line-soft: #ebebeb;
+  --soft: #f7f7f7;
+  --radius: 0.75rem;
+  --shadow-card: 0 6px 16px rgba(0, 0, 0, 0.12);
+  --page-pad: 2.5rem;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -5,8 +19,17 @@
 }
 
 body {
-  background-color: #f5f5f5;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff;
+  color: var(--ink);
+  font-family:
+    "Circular",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -17,104 +40,74 @@ body {
   flex: 1;
 }
 
-h3 {
-  color: #333333;
-  font-size: 2rem;
-  margin-left: 1rem;
+[hidden] {
+  display: none !important;
 }
 
-.landing-hero {
-  min-height: 70vh;
-  display: flex;
+/* ── Shared buttons ──────────────────────────────── */
+.btn-brand,
+.btn-outline,
+.btn-plain {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem 1.5rem;
-  background: linear-gradient(135deg, #fff3f3, #f8f9ff);
-}
-
-.landing-content {
-  width: 100%;
-  max-width: 900px;
-  text-align: center;
-}
-
-.landing-kicker {
-  color: #fe424d;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 1rem;
-}
-
-.landing-title {
-  font-size: 3.2rem;
-  color: #222;
-  margin-bottom: 1rem;
-}
-
-.landing-text {
-  max-width: 700px;
-  margin: 0 auto 2rem;
-  color: #555;
-  font-size: 1.1rem;
-  line-height: 1.8;
-}
-
-.landing-actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.landing-btn {
-  display: inline-block;
-  padding: 0.9rem 1.4rem;
-  border-radius: 10px;
-  text-decoration: none;
+  gap: 0.5rem;
+  font: inherit;
   font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.8rem 1.4rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    filter 0.15s ease,
+    transform 0.1s ease;
 }
 
-.landing-btn-primary {
-  background: #fe424d;
+.btn-brand:active,
+.btn-outline:active {
+  transform: scale(0.97);
+}
+
+.btn-brand {
+  background: var(--brand-gradient);
   color: #fff;
+  border: none;
 }
 
-.landing-btn-secondary {
+.btn-brand:hover {
+  filter: brightness(0.94);
+}
+
+.btn-outline {
   background: #fff;
-  color: #333;
-  border: 1px solid #ddd;
+  color: var(--ink);
+  border: 1px solid var(--ink);
 }
 
-.landing-features {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem 1.5rem 4rem;
-  max-width: 1100px;
-  margin: 0 auto;
+.btn-outline:hover {
+  background: var(--soft);
 }
 
-.feature-card {
-  background: #fff;
-  border-radius: 14px;
-  padding: 1.5rem;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
-  text-align: center;
+.btn-plain {
+  background: none;
+  border: none;
+  color: var(--ink);
+  text-decoration: underline;
+  padding: 0.5rem 0.6rem;
 }
 
-.feature-card i {
-  font-size: 1.8rem;
-  color: #fe424d;
-  margin-bottom: 1rem;
+.btn-plain:hover {
+  background: var(--soft);
 }
 
-.feature-card h3 {
-  margin: 0 0 0.75rem;
-  font-size: 1.3rem;
+.btn-danger {
+  color: #c13515;
 }
 
-.feature-card p {
-  color: #666;
-  line-height: 1.6;
+@media (max-width: 744px) {
+  :root {
+    --page-pad: 1.25rem;
+  }
 }

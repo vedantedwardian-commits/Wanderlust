@@ -1,144 +1,182 @@
 <% layout("/layouts/boilerplate.ejs") %>
+<% const isOwner = currUser && listing.owner && currUser._id.toString() === listing.owner._id.toString(); %>
 
-<body class="listing-page">
-  <div class="listing-container">
-    <div class="listing-card">
-      <h3 class="listing-title"><%= listing.title %></h3>
-
-      <div class="listing-image-wrapper">
-        <img
-          src="<%= listing.image.url %>"
-          alt="Listing Image"
-          class="listing-image"
-        />
-      </div>
-
-      <ul class="listing-info">
-        <li class="listing-description"><%= listing.description %></li>
-        <li class="listing-price">
-          ₹ <%= listing.price.toLocaleString("en-IN") %>
-        </li>
-        <li class="listing-location"><%= listing.location %></li>
-        <li class="listing-country"><%= listing.country %></li>
-        <li class="listing-owner">Hosted by: <%= ownerUsername %></li>
-      </ul>
-
-      <% if (currUser && listing.owner && currUser._id.toString() === listing.owner._id.toString()) { %>
-        <div class="listing-actions">
-          <a href="/listings/<%= listing._id %>/edit" class="btn btn-edit"
-            >Edit this Listing
-          </a>
-
-          <form
-            action="/listings/<%= listing._id %>?_method=DELETE"
-            method="POST"
-            class="delete-form"
-          >
-            <button class="btn delete-btn">Delete this Listing</button>
-          </form>
-        </div>
-      <% } %>
-      <br />
-      <hr />
-      <br />
-      <div class="listing-card">
-        <h4>Leave a Review</h4>
-        <form
-          class="review-form"
-          action="/listings/<%= listing._id %>/review"
-          method="POST"
-        >
-          <div class="review-inputs">
-            <label for="rating" class="form-label">Rating</label>
-            <div class="star-rating" id="rating">
-              <input type="radio" id="star5" name="review[rating]" value="5" required />
-              <label for="star5" title="5 stars"></label>
-
-              <input type="radio" id="star4" name="review[rating]" value="4" />
-              <label for="star4" title="4 stars"></label>
-
-              <input type="radio" id="star3" name="review[rating]" value="3" />
-              <label for="star3" title="3 stars"></label>
-
-              <input type="radio" id="star2" name="review[rating]" value="2" />
-              <label for="star2" title="2 stars"></label>
-
-              <input type="radio" id="star1" name="review[rating]" value="1" />
-              <label for="star1" title="1 star"></label>
-            </div>
-          </div>
-          <div class="review-inputs">
-            <label for="comment" class="form-label">Comment</label>
-            <textarea
-              id="comment"
-              name="review[comment]"
-              cols="30"
-              rows="10"
-              class="form-control"
-              required
-            ></textarea>
-          </div>
-          <button class="submit-btn btn">Submit</button>
-        </form>
-        <br />
-        <hr />
-        <br />
-        <section class="reviews-section">
-          <h4 class="reviews-heading">All Reviews</h4>
-
-          <% if (listing.reviews.length === 0) { %>
-            <p class="empty-reviews">No reviews yet.</p>
-          <% } %>
-
-          <% for (let review of listing.reviews) { %>
-            <article class="review-card">
-              <div class="review-topline">
-                <p class="review-rating">
-                  Rating:
-                  <strong class="review-stars" aria-label="<%= review.rating %> out of 5 stars">
-                    <%= "★".repeat(review.rating) %><%= "☆".repeat(5 - review.rating) %>
-                  </strong>
-                </p>
-                <p class="review-author">
-                  By: <strong><%= review.author?.username || "Anonymous" %></strong>
-                </p>
-                <p class="review-time">
-                  <%= new Date(review.created_at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }) %>
-                </p>
-              </div>
-              <p class="review-comment"><%= review.comment %></p>
-              <br />
-              <% if (currUser && review.author && currUser._id.toString() === review.author._id.toString()) { %>
-                <form
-                  action="/listings/<%= listing._id %>/review/<%= review._id %>?_method=DELETE"
-                  method="POST"
-                  class="delete-form"
-                >
-                  <button class="btn delete-btn">Delete this Review</button>
-                </form>
-              <% } %>
-            </article>
-          <% } %>
-        </section>
-        <br><hr><br>
-        <h4>Location Map</h4>
-        <div id="map">
-          <iframe
-            title="Listing Location Map"
-            src="https://maps.google.com/maps?q=<%= mapQuery %>&z=14&output=embed&iwloc=A"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
-        <a
-          href="https://www.google.com/maps/search/?api=1&query=<%= mapQuery %>"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="open-maps-btn"
-        >
-          <i class="fa-solid fa-location-dot"></i> Open in Google Maps
-        </a>
-      </div>
+<main class="listing-page">
+  <!-- ── Title row ─────────────────────────────────── -->
+  <header class="listing-head">
+    <h1 class="listing-title"><%= listing.title %></h1>
+    <div class="listing-head-actions">
+      <button type="button" class="btn-plain listing-share" data-share>
+        <i class="fa-solid fa-arrow-up-from-bracket"></i> Share
+      </button>
+      <button type="button" class="btn-plain listing-save" data-wishlist-id="<%= listing._id %>">
+        <i class="fa-solid fa-heart"></i> Save
+      </button>
     </div>
+  </header>
+
+  <!-- ── Photo ─────────────────────────────────────── -->
+  <div class="listing-photo">
+    <img src="<%= listing.image && listing.image.url %>" alt="<%= listing.title %>" />
   </div>
-</body>
+
+  <div class="listing-layout">
+    <!-- ── Details column ─────────────────────────── -->
+    <div class="listing-details">
+      <section class="listing-summary">
+        <h2>Stay in <%= listing.location %>, <%= listing.country %></h2>
+        <p class="listing-rating-line">
+          <i class="fa-solid fa-star"></i>
+          <% if (avgRating) { %>
+            <strong><%= avgRating.toFixed(2) %></strong> ·
+            <a href="#reviews"><%= reviewCount %> review<%= reviewCount !== 1 ? "s" : "" %></a>
+          <% } else { %>
+            <strong>New</strong> · No reviews yet
+          <% } %>
+        </p>
+        <% if (avgRating && avgRating >= 4.5) { %>
+          <div class="listing-favourite">
+            <span class="listing-favourite-label"><i class="fa-solid fa-award"></i> Guest favourite</span>
+            <span>One of the most loved homes on WanderLust, according to guests</span>
+          </div>
+        <% } %>
+      </section>
+
+      <section class="listing-host">
+        <span class="avatar avatar--lg"><%= ownerUsername.charAt(0).toUpperCase() %></span>
+        <div>
+          <h3>Hosted by <%= ownerUsername %></h3>
+          <p>WanderLust host</p>
+        </div>
+      </section>
+
+      <% if (isOwner) { %>
+        <section class="listing-owner-tools">
+          <p>You're the host of this place.</p>
+          <div>
+            <a href="/listings/<%= listing._id %>/edit" class="btn-outline">
+              <i class="fa-solid fa-pen"></i> Edit listing
+            </a>
+            <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" data-confirm="Delete this listing? This can't be undone.">
+              <button class="btn-plain btn-danger">Delete listing</button>
+            </form>
+          </div>
+        </section>
+      <% } %>
+
+      <section class="listing-about">
+        <h3>About this place</h3>
+        <p><%= listing.description || "The host hasn't added a description yet." %></p>
+      </section>
+    </div>
+
+    <!-- ── Booking card ───────────────────────────── -->
+    <aside class="booking">
+      <div class="booking-card" data-price="<%= listing.price || 0 %>">
+        <p class="booking-price">
+          <strong>₹<%= (listing.price || 0).toLocaleString("en-IN") %></strong> night
+        </p>
+
+        <div class="booking-fields">
+          <label class="booking-field">
+            <span>Check-in</span>
+            <input type="date" name="checkin" />
+          </label>
+          <label class="booking-field">
+            <span>Checkout</span>
+            <input type="date" name="checkout" />
+          </label>
+          <label class="booking-field booking-field--wide">
+            <span>Guests</span>
+            <input type="number" name="guests" min="1" max="16" value="1" />
+          </label>
+        </div>
+
+        <button type="button" class="btn-brand booking-btn" data-reserve>Reserve</button>
+        <p class="booking-note" data-booking-note>You won't be charged yet</p>
+
+        <div class="booking-breakdown" data-breakdown hidden>
+          <p><span data-breakdown-label></span><span data-breakdown-total></span></p>
+          <hr />
+          <p class="booking-total"><span>Total</span><span data-breakdown-grand></span></p>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ── Reviews ───────────────────────────────────── -->
+  <section class="listing-section" id="reviews">
+    <h2 class="section-heading">
+      <i class="fa-solid fa-star"></i>
+      <% if (avgRating) { %>
+        <%= avgRating.toFixed(2) %> · <%= reviewCount %> review<%= reviewCount !== 1 ? "s" : "" %>
+      <% } else { %>
+        No reviews (yet)
+      <% } %>
+    </h2>
+
+    <% if (listing.reviews.length) { %>
+      <div class="review-grid">
+        <% for (let review of listing.reviews) { %>
+          <article class="review">
+            <header class="review-head">
+              <span class="avatar"><%= (review.author?.username || "A").charAt(0).toUpperCase() %></span>
+              <div>
+                <h4><%= review.author?.username || "Anonymous" %></h4>
+                <p><%= new Date(review.created_at).toLocaleDateString("en-IN", { month: "long", year: "numeric" }) %></p>
+              </div>
+            </header>
+            <p class="review-stars" aria-label="<%= review.rating %> out of 5 stars">
+              <% for (let i = 1; i <= 5; i++) { %><i class="fa-solid fa-star<%= i > review.rating ? ' is-off' : '' %>"></i><% } %>
+            </p>
+            <p class="review-comment"><%= review.comment %></p>
+            <% if (currUser && review.author && currUser._id.toString() === review.author._id.toString()) { %>
+              <form action="/listings/<%= listing._id %>/review/<%= review._id %>?_method=DELETE" method="POST" data-confirm="Delete your review?">
+                <button class="btn-plain btn-danger review-delete">Delete</button>
+              </form>
+            <% } %>
+          </article>
+        <% } %>
+      </div>
+    <% } else { %>
+      <p class="muted">Be the first to share what it's like to stay here.</p>
+    <% } %>
+
+    <form class="review-form" action="/listings/<%= listing._id %>/review" method="POST">
+      <h3>Leave a review</h3>
+      <fieldset class="star-rating">
+        <legend>Your rating</legend>
+        <div class="star-rating-stars">
+          <% for (let i = 5; i >= 1; i--) { %>
+            <input type="radio" id="star<%= i %>" name="review[rating]" value="<%= i %>" <%= i === 5 ? "required" : "" %> />
+            <label for="star<%= i %>" title="<%= i %> star<%= i !== 1 ? 's' : '' %>"><i class="fa-solid fa-star"></i></label>
+          <% } %>
+        </div>
+      </fieldset>
+      <label class="field">
+        <span>Your review</span>
+        <textarea name="review[comment]" rows="4" placeholder="How was your stay?" required></textarea>
+      </label>
+      <button class="btn-brand">Submit review</button>
+    </form>
+  </section>
+
+  <!-- ── Map ───────────────────────────────────────── -->
+  <section class="listing-section">
+    <h2 class="section-heading">Where you'll be</h2>
+    <p class="map-place"><%= listing.location %>, <%= listing.country %></p>
+    <div class="listing-map">
+      <iframe
+        title="Listing location map"
+        src="https://maps.google.com/maps?q=<%= mapQuery %>&z=13&output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
+    <a href="https://www.google.com/maps/search/?api=1&query=<%= mapQuery %>" target="_blank" rel="noopener noreferrer" class="map-link">
+      Open in Google Maps <i class="fa-solid fa-chevron-right"></i>
+    </a>
+  </section>
+</main>
+
+<script src="/js/show.js"></script>

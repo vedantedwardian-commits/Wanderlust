@@ -1,18 +1,50 @@
+<% const user = typeof currUser !== "undefined" ? currUser : null; %>
 <nav class="navbar">
-  <a href="/" class="nav-icon"><i class="fa-regular fa-compass">WanderLust</i></a>
-  <input type="checkbox" id="nav-toggle" class="nav-toggle">
-  <label for="nav-toggle" class="menu-toggle" aria-label="Toggle navigation menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </label>
-  <div class="navlinks">
-    <a href="/listings" class="navlink">All Locations</a>
-    <a href="/listings/new" class="navlink">Add a Location</a>
-    <% if(!currUser){ %>
-      <a href="/signup" class="navlink">Create Account</a>
-    <% } else { %>
-      <a href="/logout" class="navlink">Logout</a>
-    <% } %>
+  <a href="/" class="nav-logo" aria-label="WanderLust home">
+    <i class="fa-regular fa-compass"></i>
+    <span>wanderlust</span>
+  </a>
+
+  <% if (typeof hideNavSearch === "undefined" || !hideNavSearch) { %>
+    <form action="/listings" method="GET" class="nav-search" role="search">
+      <input type="text" name="q" placeholder="Search destinations" aria-label="Search destinations" autocomplete="off" />
+      <button type="submit" class="nav-search-btn" aria-label="Search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </form>
+  <% } %>
+
+  <div class="nav-right">
+    <a href="/listings/new" class="nav-host">Add a location</a>
+
+    <details class="nav-menu">
+      <summary class="nav-menu-btn" aria-label="Open menu">
+        <i class="fa-solid fa-bars"></i>
+        <span class="nav-avatar<%= user ? ' is-user' : '' %>">
+          <% if (user) { %>
+            <%= user.username.charAt(0).toUpperCase() %>
+          <% } else { %>
+            <i class="fa-solid fa-user"></i>
+          <% } %>
+        </span>
+      </summary>
+
+      <div class="nav-dropdown">
+        <% if (user) { %>
+          <p class="nav-dropdown-user">Hi, <%= user.username %></p>
+          <hr />
+          <a href="/listings">All locations</a>
+          <a href="/listings/new">Add a location</a>
+          <hr />
+          <a href="/logout">Log out</a>
+        <% } else { %>
+          <a href="/signin" class="is-strong">Log in</a>
+          <a href="/signup">Sign up</a>
+          <hr />
+          <a href="/listings">All locations</a>
+          <a href="/listings/new">Add a location</a>
+        <% } %>
+      </div>
+    </details>
   </div>
 </nav>

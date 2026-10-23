@@ -1,0 +1,26 @@
+<article class="stay" data-search="<%= [list.title, list.description, list.location, list.country].filter(Boolean).join(' ').toLowerCase() %>">
+  <a href="/listings/<%= list._id %>" class="stay-link">
+    <div class="stay-media">
+      <img src="<%= list.image && list.image.url %>" alt="<%= list.title %>" loading="lazy" />
+      <% if (list.avgRating && list.avgRating >= 4.5) { %>
+        <span class="stay-badge">Guest favourite</span>
+      <% } %>
+    </div>
+    <div class="stay-info">
+      <div class="stay-top">
+        <h3 class="stay-title"><%= list.location %>, <%= list.country %></h3>
+        <span class="stay-rating">
+          <i class="fa-solid fa-star"></i>
+          <%= list.avgRating ? list.avgRating.toFixed(2) : "New" %>
+        </span>
+      </div>
+      <p class="stay-meta"><%= list.title %></p>
+      <p class="stay-price">
+        <strong>₹<%= (list.price || 0).toLocaleString("en-IN") %></strong> night
+      </p>
+    </div>
+  </a>
+  <button type="button" class="stay-heart" data-id="<%= list._id %>" aria-label="Save to wishlist">
+    <i class="fa-solid fa-heart"></i>
+  </button>
+</article>

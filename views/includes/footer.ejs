@@ -1,17 +1,41 @@
 <footer class="footer">
-  <div class="f-info">
-    <div class="f-info-socials">
-      <a href="https://github.com/vedantedwardian-commits"
-        ><i class="fa-brands fa-github"></i
-      ></a>
-      <a href="https://www.linkedin.com/in/vedant-latawa-3a996a2a5/"
-        ><i class="fa-brands fa-linkedin"></i
-      ></a>
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <section>
+        <h3>Explore</h3>
+        <a href="/listings">All stays</a>
+        <a href="/listings?q=beach">Beach stays</a>
+        <a href="/listings?q=mountain">Mountain getaways</a>
+        <a href="/listings?q=city">City breaks</a>
+      </section>
+      <section>
+        <h3>Hosting</h3>
+        <a href="/listings/new">WanderLust your home</a>
+        <a href="/signup">Create a host account</a>
+        <a href="/terms#listings">Hosting responsibly</a>
+      </section>
+      <section>
+        <h3>WanderLust</h3>
+        <a href="/">Home</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+      </section>
     </div>
-    <div class="f-info-company">&copy; WanderLust Private Limited</div>
-    <div class="f-info-links">
-      <a href="/privacy">Privacy Policy</a>
-      <a href="/terms">Terms of Service</a>
+
+    <div class="footer-bottom">
+      <div class="footer-legal">
+        <span>&copy; <%= new Date().getFullYear() %> WanderLust Private Limited</span>
+        <span aria-hidden="true">·</span>
+        <a href="/privacy">Privacy</a>
+        <span aria-hidden="true">·</span>
+        <a href="/terms">Terms</a>
+      </div>
+      <div class="footer-socials">
+        <span class="footer-lang"><i class="fa-solid fa-globe"></i> English (IN)</span>
+        <span class="footer-lang">₹ INR</span>
+        <a href="https://github.com/vedantedwardian-commits" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/vedant-latawa-3a996a2a5/" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+      </div>
     </div>
   </div>
 </footer>
